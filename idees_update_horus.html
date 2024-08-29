@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="form-container">
+        <form id="userForm">
+            <h2>Envoyer un Message</h2>
+            <label for="name">Nom:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+
+            <button type="submit">Envoyer</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('userForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const data = {
+                name: document.getElementById('name').value,
+                message: document.getElementById('message').value
+            };
+
+            fetch('https://hook.eu1.make.com/5gg09ule5duveuo6qpnl0w56ljh8y99v', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert('Message envoyé avec succès!');
+            })
+            .catch(error => {
+                alert('Erreur lors de l\'envoi du message');
+                console.error('Erreur:', error);
+            });
+        });
+    </script>
+</body>
+</html>
